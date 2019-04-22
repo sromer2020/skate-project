@@ -40,6 +40,9 @@ def autocrop(img, padding):
     xmax = min(xmax + padding, width - 1)
     ymax = min(ymax + padding, height - 1)
     
+    if (xmax - xmin < 10 or ymax - ymin < 10):
+        return None, None
+    
     cropped = src[ymin:ymax, xmin:xmax]
     cv2.rectangle(src, (xmin, ymin) , (xmax, ymax) , (0, 0, 0), 1)
     return src, cropped
