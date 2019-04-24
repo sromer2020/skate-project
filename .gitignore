@@ -1,3 +1,9 @@
 
+*.pyc
+
 test.py
 test.png
+test2.png
+test3.png
+test4.png
+test5.png
