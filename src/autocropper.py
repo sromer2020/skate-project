@@ -7,12 +7,13 @@ def iterate_image(img):
 
 class AutoCropper:
     
-    def __init__(self, color_lower, color_upper, padding=10, pre_crop=10):
+    def __init__(self, color_lower, color_upper, threshold=225, padding=10, pre_crop=10):
         """
         'color_lower' and 'color_upper' are arrays of [H, S, V]
         """
         self.color_lower = color_lower
         self.color_upper = color_upper
+        self.threshold = threshold
         self.padding = padding
         self.pre_crop = pre_crop
         self.CROP_FAILURE_THRESHOLD = 10
@@ -32,6 +33,8 @@ class AutoCropper:
         # remove colors other than the object of interest
         img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         img = self._isolate_colors(img, self.color_lower, self.color_upper)
+        # blur out some noise below "white" threshold
+        img = cv2.GaussianBlur(img, (17, 17), 1500)
         return img
     
     def crop(self, img):
@@ -45,7 +48,7 @@ class AutoCropper:
         
         for i, j in iterate_image(img):
             # isolate_colors() returns B&W, W is object of interest
-            if (img[i, j] == 255):
+            if (img[i, j] > self.threshold):
                 bounds_min[0] = min(bounds_min[0], i)
                 bounds_max[0] = max(bounds_max[0], i)
                 bounds_min[1] = min(bounds_min[1], j)
@@ -58,5 +61,5 @@ class AutoCropper:
         if (bounds_max[0] - bounds_min[0] < self.CROP_FAILURE_THRESHOLD
                 or bounds_max[1] - bounds_min[1] < self.CROP_FAILURE_THRESHOLD):
             return None
-
+        
         return src[bounds_min[0]:bounds_max[0], bounds_min[1]:bounds_max[1]]
