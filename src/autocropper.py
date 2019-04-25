@@ -25,30 +25,30 @@ class AutoCropper:
                      cv2.inRange(hsv_frame, lower_colors[i], upper_colors[i]))
         return mask
     
-    def _prepare_image(self, img):
+    def _prepare_mask(self, mask):
         # reduce noise
-        img = cv2.resize(img, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC)
-        img = cv2.GaussianBlur(img, (9, 9), 500)
-        img = cv2.resize(img, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
+        mask = cv2.resize(mask, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC)
+        mask = cv2.GaussianBlur(mask, (9, 9), 500)
+        mask = cv2.resize(mask, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
         # remove colors other than the object of interest
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        img = self._isolate_colors(img, self.color_lower, self.color_upper)
+        mask = cv2.cvtColor(mask, cv2.COLOR_BGR2HSV)
+        mask = self._isolate_colors(mask, self.color_lower, self.color_upper)
         # blur out some noise below "white" threshold
-        img = cv2.GaussianBlur(img, (17, 17), 1500)
-        return img
+        mask = cv2.GaussianBlur(mask, (17, 17), 1500)
+        return mask
     
     def crop(self, img):
         # crop flat amound around edge
         img = img[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
         src = img
-        img = self._prepare_image(img)
+        mask = self._prepare_mask(img)
         
-        bounds_min = [img.shape[i] for i in [0, 1]]
+        bounds_min = [mask.shape[i] for i in [0, 1]]
         bounds_max = [0, 0]
         
-        for i, j in iterate_image(img):
+        for i, j in iterate_image(mask):
             # isolate_colors() returns B&W, W is object of interest
-            if (img[i, j] > self.threshold):
+            if (mask[i, j] > self.threshold):
                 bounds_min[0] = min(bounds_min[0], i)
                 bounds_max[0] = max(bounds_max[0], i)
                 bounds_min[1] = min(bounds_min[1], j)
@@ -56,7 +56,7 @@ class AutoCropper:
                 
         for i in [0, 1]:
             bounds_min[i] = max(bounds_min[i] - self.padding, 0)
-            bounds_max[i] = min(bounds_max[i] + self.padding, img.shape[i] - 1)
+            bounds_max[i] = min(bounds_max[i] + self.padding, mask.shape[i] - 1)
         
         if (bounds_max[0] - bounds_min[0] < self.CROP_FAILURE_THRESHOLD
                 or bounds_max[1] - bounds_min[1] < self.CROP_FAILURE_THRESHOLD):
