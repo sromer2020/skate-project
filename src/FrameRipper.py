@@ -20,7 +20,6 @@ def get_video_files(video_path = 'Videos'):
 
 # Function that takes each element from the video_list and returns the total frame count of each video file
 def get_total_frames(videos = get_video_files()):
-    
     total_frames = []
     
     for index, file_name in enumerate(videos):
@@ -66,7 +65,7 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
                 os.makedirs(file_name + 'data')
         except OSError:
             print ('Error: Creating directory')
-            
+
         # Instantiates frame counter
         current_frame = 0
         
