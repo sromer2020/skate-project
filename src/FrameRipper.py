@@ -100,7 +100,6 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
         # When everything done, releases the capture
         cap.release()
         cv2.destroyAllWindows()
-        
 
 # Calls master rip function
 def main(run = rip_frames()):
