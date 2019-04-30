@@ -9,7 +9,7 @@ import os.path
 import cv2
 import numpy as np
 
-__author__ = "Nick"
+__author__ = 'Nick'
 
 class FilterFinder:
 
@@ -56,12 +56,12 @@ class FilterFinder:
 			self.set_filters(known_filters)
 		# if both of the above conditions failed, use generic filter names
 		if self.filters == {}:
-			self.filters = self.get_filter_map("filter1", "filter2")
+			self.filters = self.get_filter_map('filter1', 'filter2')
 
 	# display video at path and allow user to alter chosen color range live
 	def find_filter(self, path, chosen, downsize_scale = 2, write = True):
 		# if path leads to valid file
-		if os.path.isfile("../videos/Board_trim1.mp4"):
+		if os.path.isfile(path):
 			# if desired parameter exists in filtering parameter set
 			if chosen in self.filters:
 				# decide which color filter bounds to alter using controls based on supplied name
@@ -94,7 +94,7 @@ class FilterFinder:
 						frame = cv2.resize(frame, (scaled_width, scaled_height))
 						hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 						
-						features["raw"] = frame
+						features['raw'] = frame
 						
 						# get all masks and features for each filter
 						for key, (lower,upper) in self.filters.iteritems():
@@ -104,8 +104,8 @@ class FilterFinder:
 							feature = cv2.bitwise_and(frame, frame, mask = masks[key])
 							
 							# write current filter info onto each filtered feature
-							lower_text = "lower: [{0},{1},{2}]".format(lower[0], lower[1], lower[2])
-							upper_text = "upper: [{0},{1},{2}]".format(upper[0],upper[1],upper[2])
+							lower_text = 'lower: [{0},{1},{2}]'.format(lower[0], lower[1], lower[2])
+							upper_text = 'upper: [{0},{1},{2}]'.format(upper[0],upper[1],upper[2])
 							cv2.putText(feature, lower_text, font_position, font, font_scale, font_color, font_thickness)
 							cv2.putText(feature, upper_text, (font_position[0], font_position[1]-30), font, font_scale, font_color, font_thickness)
 
@@ -113,10 +113,10 @@ class FilterFinder:
 
 						# reset combined mask before recalculating it
 						# TODO: find a way around having to do this
-						masks["combined"] = 0
-						masks["combined"] = self.combine_masks(masks)
+						masks['combined'] = 0
+						masks['combined'] = self.combine_masks(masks)
 						
-						features["combined"] = cv2.bitwise_and(frame, frame, mask = masks["combined"])
+						features['combined'] = cv2.bitwise_and(frame, frame, mask = masks['combined'])
 						
 						# show all things
 						for key, feature in features.iteritems():
@@ -156,17 +156,17 @@ class FilterFinder:
 						self.filters[chosen][0], self.filters[chosen][1] = lower_chosen, upper_chosen
 					return (lower_chosen, upper_chosen)
 				# TODO: implement actual exception/error handling
-				else: print "The file provided could not be read. Make sure the given path leads to a video file."
+				else: print 'The file provided could not be read. Make sure the given path leads to a video file.'
 			else: 
-				print ("The desired filtering parameter \"{0}\" was not found "+
-				"in the parameter set:\r\n{1}").format(chosen, self.filters.keys())
-		else: print "The supplied filepath did not lead to a file."
+				print ('The desired filtering parameter \'{0}\' was not found '+
+				'in the parameter set:\r\n{1}').format(chosen, self.filters.keys())
+		else: print 'The supplied filepath \'{0}\' did not lead to a file.'.format(path)
 	
 	# return a set of predetermined filters based on the trials using Steven's skateboard
 	def get_default_filters(self):
-		return {"board":[np.array([82,39,80]), np.array([100,155,180])], 
-		"wheel":[np.array([10,40,0]),np.array([29,230,255])],
-		"edge":[np.array([10,25,115]), np.array([25,155,255])]}
+		return {'board':[np.array([82,39,80]), np.array([100,155,180])], 
+		'wheel':[np.array([10,40,0]),np.array([29,230,255])],
+		'edge':[np.array([10,25,115]), np.array([25,155,255])]}
 	
 	# map a single name, or list of names to a default set of filter parameters
 	def get_filter_map(self, names, min_style_default = True):
