@@ -7,7 +7,23 @@ def iterate_image(img):
 
 class AutoCropper:
     
-    def __init__(self, threshold=225, padding=10, pre_crop=10):
+    def __init__(self, blur_size=17, blur_amt=1500, threshold=250, padding=10, pre_crop=10):
+        """
+        Parameters
+        ----------
+        blur_size : int
+            Blur filter width and height.
+        blur_amt : int
+            Gaussian blur strength.
+        threshold : int
+            Only consider white pixels above this threshold for the region of interest.
+        padding : int
+            Expand cropped area by padding on all four sides.
+        pre_crop : int
+            Flat crop around edges before autocropping.
+        """
+        self.blur_size = blur_size
+        self.blur_amt = blur_amt
         self.threshold = threshold
         self.padding = padding
         self.pre_crop = pre_crop
@@ -15,7 +31,7 @@ class AutoCropper:
     
     def _prepare_mask(self, mask):
         # blur out some noise below "white" threshold
-        mask = cv2.GaussianBlur(mask, (17, 17), 1500)
+        mask = cv2.GaussianBlur(mask, (self.blur_size, self.blur_size), self.blur_amt)
         return mask
     
     def crop(self, img, mask):
