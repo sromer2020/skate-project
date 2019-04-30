@@ -34,7 +34,7 @@ class ImageFilter:
 			masks['combined'] = 0
 			masks['combined'] = self.combine_masks(masks)
 
-			return masks['combined'], img
+			return masks['combined']
 		else: print 'The supplied filepath \'{0}\' did not lead to a file.'.format(path)
 	
 	# combine arbitrary number of binary masks into one
