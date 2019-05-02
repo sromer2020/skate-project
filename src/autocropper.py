@@ -1,11 +1,8 @@
 import cv2
 
-__author__ = 'Thomas'
+from util import iterate_image
 
-def iterate_image(img):
-    for i in range(img.shape[0]):
-        for j in range(img.shape[1]):
-            yield (i, j)
+__author__ = 'Thomas'
 
 class AutoCropper:
     
