@@ -26,10 +26,13 @@ class AutoCropper:
         self.threshold = threshold
         self.padding = padding
         self.pre_crop = pre_crop
+        # a copped image with height or width below this value indicates a failed crop
         self.CROP_FAILURE_THRESHOLD = 10
     
     def _prepare_mask(self, mask):
         # blur out some noise below "white" threshold
+        # noise, for example, will blur too much with the black background
+        # and will then not count towards the cropping bounds
         mask = cv2.GaussianBlur(mask, (self.blur_size, self.blur_size), self.blur_amt)
         return mask
     
@@ -39,9 +42,13 @@ class AutoCropper:
         mask = mask[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
         mask = self._prepare_mask(img)
         
+        # min and max pixels found as cropping bounds
         bounds_min = [mask.shape[i] for i in [0, 1]]
         bounds_max = [0, 0]
         
+        # find new boundaries of mask
+        # should be the bounding box around the pixels that are the object of interest
+        # which is the white area in the mask
         for i, j in iterate_image(mask):
             # mask is B&W, W is object of interest
             if mask[i, j] > self.threshold:
@@ -49,7 +56,8 @@ class AutoCropper:
                 bounds_max[0] = max(bounds_max[0], i)
                 bounds_min[1] = min(bounds_min[1], j)
                 bounds_max[1] = max(bounds_max[1], j)
-                
+        
+        # add padding for each dimension
         for i in [0, 1]:
             bounds_min[i] = max(bounds_min[i] - self.padding, 0)
             bounds_max[i] = min(bounds_max[i] + self.padding, mask.shape[i] - 1)
