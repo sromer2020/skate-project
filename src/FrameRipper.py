@@ -65,7 +65,6 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
                 os.makedirs(file_name + 'data')
         except OSError:
             print ('Error: Creating directory')
-
         # Instantiates frame counter
         current_frame = 0
         
@@ -100,6 +99,7 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
         # When everything done, releases the capture
         cap.release()
         cv2.destroyAllWindows()
+        
 
 # Calls master rip function
 def main(run = rip_frames()):
