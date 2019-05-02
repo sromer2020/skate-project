@@ -98,7 +98,6 @@ class FilterFinder:
 						features['raw'] = frame
 						
 						# get all masks and features for each filter
-						#TODO: please god i hope this can just be deleted masks, features = get_features(hsv_frame)
 						for key, (lower, upper) in self.filters.iteritems():
 							# create mask
 							masks[key] = cv2.inRange(hsv_frame, lower, upper)
