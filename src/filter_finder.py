@@ -51,7 +51,7 @@ class FilterFinder:
 		# initialize filters 
 		self.filters = {}
 		if unknown_filters is not None:
-			self.filters = self.get_filter_map(unknown_filters)
+			self.set_filters(self.get_filter_map(unknown_filters))
 		if known_filters is not None:
 			self.set_filters(known_filters)
 		# if both of the above conditions failed, use generic filter names
@@ -59,6 +59,7 @@ class FilterFinder:
 			self.filters = self.get_filter_map('filter1', 'filter2')
 
 	# display video at path and allow user to alter chosen color range live
+	# TODO: chunk this method into smaller methods because it's pretty long
 	def find_filter(self, path, chosen, downsize_scale = 2, write = True):
 		# if path leads to valid file
 		if os.path.isfile(path):
@@ -78,7 +79,7 @@ class FilterFinder:
 
 					# parameters for displaying filter parameters on extracted frames
 					font = cv2.FONT_HERSHEY_SIMPLEX
-					font_position = (50,scaled_height - 40)
+					font_position = (50, scaled_height - 40)
 					font_scale = .5
 					font_color = (0,0,255)
 					font_thickness = 2
@@ -97,7 +98,8 @@ class FilterFinder:
 						features['raw'] = frame
 						
 						# get all masks and features for each filter
-						for key, (lower,upper) in self.filters.iteritems():
+						#TODO: please god i hope this can just be deleted masks, features = get_features(hsv_frame)
+						for key, (lower, upper) in self.filters.iteritems():
 							# create mask
 							masks[key] = cv2.inRange(hsv_frame, lower, upper)
 							# extract feature using mask
@@ -164,17 +166,17 @@ class FilterFinder:
 	
 	# return a set of predetermined filters based on the trials using Steven's skateboard
 	def get_default_filters(self):
-		return {'board':[np.array([82,39,80]), np.array([100,155,180])], 
-		'wheel':[np.array([10,40,0]),np.array([29,230,255])],
-		'edge':[np.array([10,25,115]), np.array([25,155,255])]}
+		return {'board': [np.array([82,39,80]), np.array([100,155,180])], 
+			'wheel': [np.array([10,40,0]),np.array([29,230,255])],
+			'edge': [np.array([10,25,115]), np.array([25,155,255])]}
 	
 	# map a single name, or list of names to a default set of filter parameters
 	def get_filter_map(self, names, min_style_default = True):
 		# decide which range to copy into all filters by default
 		default = []
 		if min_style_default is False:
-			default = [[0,0,0],[255,255,255]]
-		else: default = [[0,0,0],[0,0,0]]
+			default = [[0,0,0], [255,255,255]]
+		else: default = [[0,0,0], [0,0,0]]
 		
 		# if names is not list, put names into list
 		# TODO: is this solution actually problematic?
@@ -184,7 +186,7 @@ class FilterFinder:
 		# map names to generic filter parameters
 		filters = {}
 		for name in names:
-			filters[name] = [np.array(default[0][:]),np.array(default[1][:])]
+			filters[name] = [np.array(default[0][:]), np.array(default[1][:])]
 		return filters
 
 	def export_params(self):
@@ -202,7 +204,13 @@ class FilterFinder:
 			combined_mask = cv2.bitwise_or(combined_mask, mask)
 		return combined_mask
 	
-	# add all filters from a given dictionary of name: [lower, upper] to this instance's filters
+	# overwrite this filter_finder's filters with a set of new filters
 	def set_filters(self, filters):
+		self.filters = {}
+		for name, filter in filters.iteritems():
+			self.filters[name] = filter
+
+	# add all filters from a given dictionary of name: [lower, upper] to this instance's filters
+	def add_filters(self, filters):
 		for name, filter in filters.iteritems():
 			self.filters[name] = filter
