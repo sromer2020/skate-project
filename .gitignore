@@ -2,5 +2,6 @@
 *.jpg
 *.png
 *.pyc
+
 test.py
 videos/*
