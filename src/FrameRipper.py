@@ -2,6 +2,10 @@ import cv2
 import os
 import random
 
+from filter_finder import FilterFinder
+from image_filter import ImageFilter
+from autocropper import AutoCropper
+
 # Frame Ripper Script
 
 __author__ = 'Steve'
@@ -9,6 +13,10 @@ __author__ = 'Steve'
 # Rips frames and creates seperate directories for each individual video
 def main():
     frames_needed = 100
+    generator = FilterFinder()
+    skateboard_filter = ImageFilter(generator.get_default_filters())
+    autocropper = AutoCropper(blur_amt=1000, padding=30, pre_crop=0)
+    
     for video_file_name in get_video_files():
         cap = cv2.VideoCapture(video_file_name)
         video_folder_name = video_file_name + 'data'
@@ -17,7 +25,8 @@ def main():
         total_frame_count = get_total_frames(cap)
         for i in range(frames_needed):
             name = './{}/image{}.jpg'.format(video_folder_name, i)
-            save_random_frame(cap, total_frame_count, name)
+            save_random_frame(cap, total_frame_count, name, 
+                              skateboard_filter, autocropper)
             
         cap.release()
         cv2.destroyAllWindows()
@@ -44,17 +53,16 @@ def get_total_frames(video_cap):
     return int(video_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
 # Video Processing
-def process_frame(frame):
-    
-    # howdy partner
-    # video shit goes here yo
-    
-    return frame
+def process_frame(frame, image_filter, autocropper):
+    mask = image_filter.get_aggregate_mask(frame)
+    cropped_frame = autocropper.crop(frame, mask)
+    return cropped_frame
 
 def get_random_frame(total_frames):
     return int(random.random() * total_frames)
 
-def save_random_frame(cap, total_frames_of_video, image_name):
+def save_random_frame(cap, total_frames_of_video, image_name, 
+                      image_filter, autocropper):
     frame_number = get_random_frame(total_frames_of_video)
                 
     # Sets the image to be read to the randomly selected frame
@@ -66,7 +74,7 @@ def save_random_frame(cap, total_frames_of_video, image_name):
     if not ret:
         return
     
-    frame = process_frame(frame)
+    frame = process_frame(frame, image_filter, autocropper)
         
     # Saves image of the current frame in jpg file
     print ('Creating...' + image_name)   
