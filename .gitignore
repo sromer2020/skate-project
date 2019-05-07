@@ -1,0 +1,8 @@
+*.mp4
+*.jpg
+*.png
+*.pyc
+*.mov
+
+test.py
+videos/*
