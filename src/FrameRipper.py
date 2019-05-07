@@ -10,30 +10,32 @@ __author__ = 'Steve'
 # Function to scan the video files, processes and adds them to Array video_list
 def get_video_files(video_path = 'Videos'):
     
-    entries = os.listdir(video_path)
     video_list = []
     
-    for entry in entries:
+    for entry in os.listdir(video_path):
         video_list.append(video_path + '/' + entry)
     return video_list
 
 # Function that takes each element from the video_list and returns the total frame count of each video file
-def get_total_frames(videos = get_video_files()):
+
+def get_total_frames(video_file_names):
+    
     total_frames = []
     
-    for index, file_name in enumerate(videos):
+    for file_name in video_file_names:
         cap = cv2.VideoCapture(file_name)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         total_frames.append(frame_count)
+        cap.release()
     return total_frames
 
 # Video Processing
-def process_video():
+def process_frame(frame):
     
     # howdy partner
     # video shit goes here yo
     
-    return
+    return frame
 
 # Sub-set function
 def sub_set_finder(cap, frames):  
