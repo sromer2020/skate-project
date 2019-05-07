@@ -6,10 +6,13 @@ __author__ = 'Thomas'
 
 class AutoCropper:
     
-    def __init__(self, blur_size=17, blur_amt=1500, threshold=250, padding=10, pre_crop=10):
+    def __init__(self, img_stride=2, blur_size=17, blur_amt=1500, 
+                 threshold=250, padding=10, pre_crop=10):
         """
         Parameters
         ----------
+        img_stride : int
+            skip every img_stride pixels when determining the cropping bounds.
         blur_size : int
             Blur filter width and height.
         blur_amt : int
@@ -21,6 +24,7 @@ class AutoCropper:
         pre_crop : int
             Flat crop around edges before autocropping.
         """
+        self.img_stride = img_stride
         self.blur_size = blur_size
         self.blur_amt = blur_amt
         self.threshold = threshold
@@ -38,9 +42,10 @@ class AutoCropper:
     
     def crop(self, img, mask):
         # crop flat amound around edge
-        img = img[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
-        mask = mask[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
-        mask = self._prepare_mask(img)
+        if self.pre_crop != 0:
+            img = img[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
+            mask = mask[self.pre_crop:-self.pre_crop, self.pre_crop:-self.pre_crop]
+        mask = self._prepare_mask(mask)
         
         # min and max pixels found as cropping bounds
         bounds_min = [mask.shape[i] for i in [0, 1]]
@@ -49,7 +54,7 @@ class AutoCropper:
         # find new boundaries of mask
         # should be the bounding box around the pixels that are the object of interest
         # which is the white area in the mask
-        for i, j in iterate_image(mask):
+        for i, j in iterate_image(mask, self.img_stride):
             # mask is B&W, W is object of interest
             if mask[i, j] > self.threshold:
                 bounds_min[0] = min(bounds_min[0], i)
