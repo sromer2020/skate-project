@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import os
 import random
 
@@ -15,7 +14,7 @@ def get_video_files(video_path = 'Videos'):
     video_list = []
     
     for entry in entries:
-        video_list.append(video_path + "/" + entry)
+        video_list.append(video_path + '/' + entry)
     return video_list
 
 # Function that takes each element from the video_list and returns the total frame count of each video file
@@ -47,13 +46,10 @@ def sub_set_finder(cap, frames):
         sub_set = int(random.random() * total_frames)
     
     return sub_set
-
-    
-    
+   
 # Master Function: Rips frames and creates seperate directories for each individual video
 def rip_frames(vids = get_video_files(), frames = get_total_frames()):
-    
-    
+
     # Start of loop to run through each video held in the list
     for index, file_name in enumerate(vids):
         
@@ -65,14 +61,14 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
                 os.makedirs(file_name + 'data')
         except OSError:
             print ('Error: Creating directory')
-        # Instantiates frame counter
-        current_frame = 0
+            
+        frame_counter = 0
         
         # Starts frame capture
         while(True):
             
             # Sets boundaries for total images created per video
-            if(current_frame <= 100):
+            if(frame_counter <= 100):
                 
                 sub_set = sub_set_finder(cap, frames)
                 
@@ -80,27 +76,24 @@ def rip_frames(vids = get_video_files(), frames = get_total_frames()):
                 cap.set(1, sub_set)
                 # Capture = sub set of frames from current video
                 ret, sub_set = cap.read()
+                
                 # Checks to see if cap can even be retrieved
-                if not ret:        
-                 #if no ret, break the loop
-                 break 
+                if not ret:
+                    break 
                     
                 # Saves image of the current frame in jpg file
-                name = './'+ file_name +'data/image' + str(current_frame) + '.jpg'
+                name = './'+ file_name +'data/image' + str(frame_counter) + '.jpg'
                 print ('Creating...' + name)   
                 cv2.imwrite(name, sub_set)
-                    
-                # Counter to keep track of frames processed
-                current_frame += 1
+                
+                frame_counter += 1
             else:
                 #Breaks after each video file
                 break
                 
-        # When everything done, releases the capture
         cap.release()
         cv2.destroyAllWindows()
         
-
 # Calls master rip function
 def main(run = rip_frames()):
     run
