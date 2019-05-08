@@ -60,6 +60,7 @@ class FilterFinder:
 
 	# display video at path and allow user to alter chosen color range live
 	# TODO: chunk this method into smaller methods because it's pretty long
+	# TODO: implement optional writing
 	def find_filter(self, path, chosen, downsize_scale = 2, write = True):
 		# if path leads to valid file
 		if os.path.isfile(path):
@@ -159,9 +160,6 @@ class FilterFinder:
 					done = raw_input()
 				cv2.destroyAllWindows()
 				
-				# update values of this filter if desired
-				if (write):
-					self.filters[chosen][0], self.filters[chosen][1] = lower_chosen, upper_chosen
 				return [lower_chosen, upper_chosen]
 
 			else: 
@@ -170,13 +168,14 @@ class FilterFinder:
 		else: print 'The supplied filepath \'{0}\' did not lead to a file.'.format(path)
 	
 	# do find_filter on all supplied filters, or all filters by default
-	def find_filters(self, path, chosen = None, downsize_scale = 2):
+	# TODO: implement optional writing
+	def find_filters(self, path, chosen = None, downsize_scale = 2, write = True):
 		if chosen is not None:
 			filters = chosen
 		else: filters = self.filters
 		for key in filters:
 			print 'currently finding: {0}'.format(key)
-			derived = self.find_filter(path, key, downsize_scale = downsize_scale)
+			derived = self.find_filter(path, key, downsize_scale = downsize_scale, write = write)
 			print '\t = {0}'.format(derived)
 		return self.export_params()
 
