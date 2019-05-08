@@ -1,6 +1,6 @@
 import cv2
 import os
-import random
+import numpy as np
 
 from filter_finder import FilterFinder
 from image_filter import ImageFilter
@@ -23,10 +23,10 @@ def main():
         create_data_directory(video_folder_name)
         
         total_frame_count = get_total_frames(cap)
-        for i in range(frames_needed):
+        frames_to_use = get_random_frame_numbers(total_frame_count, frames_needed)
+        for i, frame in enumerate(frames_to_use):
             name = './{}/image{}.jpg'.format(video_folder_name, i)
-            save_random_frame(cap, total_frame_count, name, 
-                              skateboard_filter, autocropper)
+            save_random_frame(cap, frame, name, skateboard_filter, autocropper)
             
         cap.release()
         cv2.destroyAllWindows()
@@ -58,12 +58,12 @@ def process_frame(frame, image_filter, autocropper):
     cropped_frame = autocropper.crop(frame, mask)
     return cropped_frame
 
-def get_random_frame(total_frames):
-    return int(random.random() * total_frames)
+def get_random_frame_numbers(total_frames, desired_number):
+    all_numbers = np.array(range(total_frames))
+    shuffled = np.random.permutation(all_numbers)
+    return shuffled[:desired_number]
 
-def save_random_frame(cap, total_frames_of_video, image_name, 
-                      image_filter, autocropper):
-    frame_number = get_random_frame(total_frames_of_video)
+def save_random_frame(cap, frame_number, image_name, image_filter, autocropper):
                 
     # Sets the image to be read to the randomly selected frame
     cap.set(1, frame_number)
