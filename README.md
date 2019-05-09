@@ -1,4 +1,4 @@
-﻿﻿# Haar Cascade Training Data Preprocessing Simplification
+﻿# Haar Cascade Training Data Preprocessing Simplification
 
 A machine perception project using Python/OpenCV to attempt to streamline the processes of gathering training data for Haar Cascade classifiers on skateboards, and actually use said classifiers to attempt to classify given images.
 Although this project was initially created to filter/detect skateboards from video files, it was designed with reusability and reapplication of code to new purposes in mind.
@@ -29,8 +29,8 @@ This project requires the following to be installed:
 - cv2 3.4.5 or higher
 
 ## Usage
-
 ![[example generated images]](docs/example_images.png "example generated images")
+The result of passing a video of a skateboard where the camera revolved around the skateboard to the frameripper.
 
 In order to use this project's Patented Intellicrop™ automated feature-cropping feature, a directory containing videos of the object you want to filter out filmed under controlled conditions but changing camera angles, or controlled camera angles and changing conditions must be created. In our case, each of our videos consisted of the object in question filmed under static lighting conditions through either:
 * revolution of the camera around the object at a given height, or
