@@ -13,18 +13,11 @@ TODO screenshot/gif of it drawing a rectangle over skateboard
 
 ## Features
 
-This project attempts to streamline the often-laborious process of defining regions of interest in sets of unclassified training data, i.e. the process of cropping thousands of unisolated images of the object of interest when a freely-available, labeled training dataset for that object is not available. 
-In other words, this project attempts to remove the tedium of cropping thousands of images of skateboards when trying to acquire a training dataset for a Haar Cascade skateboard classifier.
-TODO other parts of the project
-
-## Code Example
-TODO
-
-//frameripper //etc?
-
-![[example generated images]](docs/example_images.png "example generated images")
-Show what the library does as concisely as possible, developers should be able to figure out how your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
-TODO
+This project attempts to streamline the often-laborious process of acquiring a good training dataset for objects where freel-available, labeled training datasets are not available.
+In particular, the project gives tools to take random subsets of frames taken from videos and of interest in sets of unclassified training data, i.e. the process of cropping thousands of unisolated images of the object of interest when a freely-available, labeled training dataset for that object is not available. 
+In other words, this project attempts to remove the tedium of cropping thousands of images of e.g. skateboards when trying to acquire a training dataset for a Haar Cascade skateboard classifier. This is done by:
+1. Extracting a mask of the object of interest out of original images/frames using naive color filters (with filter_finder utility)
+2. Automatically determining rectangular boundaries of object of interest using mask (with autocropper utility).
 
 ## Installation/Setup
 
@@ -33,12 +26,9 @@ This project requires the following to be installed:
 - Python 2.7.15 or higher (not tested in Python 3)
 - cv2 3.4.5 or higher
 
-## Tests
-
-Describe and show how to run the tests with code examples.
-TODO
-
 ## Usage
+
+![[example generated images]](docs/example_images.png "example generated images")
 
 In order to use this project's Patented Intellicrop™ automated feature-cropping feature, a directory containing videos of the object you want to filter out filmed under controlled conditions but changing camera angles, or controlled camera angles and changing conditions must be created. In our case, each of our videos consisted of the object in question filmed under static lighting conditions through either:
 * revolution of the camera around the object at a given height, or

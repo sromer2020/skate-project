@@ -1,9 +1,9 @@
 *.mp4
-src/**/*.jpg
-src/**/*.png
+*.jpg
+*.png
 *.pyc
 *.mov
-!docs.*
+!docs/*
 
 test.py
 videos/*
