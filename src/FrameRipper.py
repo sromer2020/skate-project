@@ -12,10 +12,10 @@ __author__ = 'Steve'
 
 # Rips frames and creates seperate directories for each individual video
 def main():
-    frames_needed = 100
+    frames_needed = 1000
     generator = FilterFinder()
     skateboard_filter = ImageFilter(generator.get_default_filters())
-    autocropper = AutoCropper(blur_amt=1000, padding=30, pre_crop=0)
+    autocropper = AutoCropper(blur_amt=1000, padding=40, pre_crop=0, img_stride=3)
     
     for video_file_name in get_video_files():
         cap = cv2.VideoCapture(video_file_name)
