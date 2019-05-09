@@ -34,6 +34,27 @@ class ImageFilter:
 
         return masks['combined']
     
+    # run through supplied video to confirm that combined filters accurately extract
+    # the features
+    def test_filters(self, path, downsize_scale = 2):
+        cap = cv2.VideoCapture(path)
+        success, frame = cap.read()
+
+        height, width, _ = frame.shape
+        scaled_height, scaled_width = height/downsize_scale, width/downsize_scale
+        while (success):
+            frame = cv2.resize(frame, (scaled_width, scaled_height))
+            mask = self.get_aggregate_mask(frame)
+            combined_features = cv2.bitwise_and(frame, frame, mask = mask)
+            cv2.imshow('{0} combined'.format(path), combined_features)
+            success, frame = cap.read()
+            
+            k = cv2.waitKey(5) & 0xFF
+            if k == 27:
+                break
+        cv2.destroyAllWindows()
+            
+    
     # combine arbitrary number of binary masks into one
     def _combine_masks(self, masks):
         combined_mask = []
