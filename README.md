@@ -42,8 +42,8 @@ TODO
 
 In order to use this project's Patented Intellicrop™ automated feature-cropping feature, a directory containing videos of the object you want to filter out filmed under controlled conditions but changing camera angles, or controlled camera angles and changing conditions must be created. In our case, each of our videos consisted of the object in question filmed under static lighting conditions through either:
 * revolution of the camera around the object at a given height, or
-* the movement of the object through the environment, or
-* the movement of the camera towards and away from the object without changing the clockwise position of the camera relative to the object.
+* movement of the object through the environment, or
+* movement of the camera towards and away from the object without changing the clockwise position of the camera relative to the object.
 
 Alternatively, a directory containing a set of training images known to contain the object of interest and nothing else can be created.
 Once one or both of the above is done, TODO
