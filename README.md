@@ -1,4 +1,4 @@
-﻿# Haar Cascade Training Data Preprocessing Simplification
+﻿﻿# Haar Cascade Training Data Preprocessing Simplification
 
 A machine perception project using Python/OpenCV to attempt to streamline the processes of gathering training data for Haar Cascade classifiers on skateboards, and actually use said classifiers to attempt to classify given images.
 Although this project was initially created to filter/detect skateboards from video files, it was designed with reusability and reapplication of code to new purposes in mind.
@@ -58,5 +58,5 @@ Arguments:
 
 ## Credits
 
-We would like to thank Ali Parlakci's Bulk Downloader for Reddit, https://aliparlakci.github.io/bulk-downloader-for-reddit/, for enabling us to easily get a large set of negative images by bulk-downloading images from /r/pics.
-We would also like to thank the Cascade Trainer GUI, http://amin-ahmadi.com/cascade-trainer-gui/, for allowing us to easily and and quickly train several Haar Cascade classifiers.
+We would like to thank [Ali Parlakci's Bulk Downloader for Reddit](https://aliparlakci.github.io/bulk-downloader-for-reddit/) for enabling us to easily get a large set of negative images by bulk-downloading images from /r/pics.
+We would also like to thank the [Cascade Trainer GUI](http://amin-ahmadi.com/cascade-trainer-gui/) for allowing us to easily and and quickly train several Haar Cascade classifiers.
