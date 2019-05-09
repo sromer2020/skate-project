@@ -7,10 +7,6 @@ Although this project was initially created to filter/detect skateboards from vi
 
 This project was originally created as the final project for Machine Perception Spring 2019.
 
-## Screenshots
-
-TODO screenshot/gif of it drawing a rectangle over skateboard
-
 ## Features
 
 This project attempts to streamline the often-laborious process of acquiring a good training dataset for objects where freel-available, labeled training datasets are not available.
@@ -38,15 +34,23 @@ In order to use this project's Patented Intellicrop™ automated feature-croppin
 * movement of the camera towards and away from the object without changing the clockwise position of the camera relative to the object.
 
 Alternatively, a directory containing a set of training images known to contain the object of interest and nothing else can be created.
-Once one or both of the above is done, TODO
+Once one or both of the above is done, run the following command to initiate the frameripping/autocropping:
 
 > cd src
+
 > python FrameRipper.py VIDEOSPATH [--framecount FRAMECOUNT] 
 
 Arguments:
 - `videospath` - path to videos to rip and crop frames
 - `framecount` *(optional)* - number of frames to rip for each video
 
+See [Cascade Trainer GUI](http://amin-ahmadi.com/cascade-trainer-gui/) for information on how to actually train a model.
+
+## Screenshots
+
+Example of detected skateboard object using the trained Haar Cascade models:
+
+![detected rectangles on skateboard image](docs/detections.gif)
 
 ## Credits
 
