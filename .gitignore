@@ -3,6 +3,8 @@
 *.png
 *.pyc
 *.mov
+src/arc/*
+src/good_stuff/*
 
 !docs/*
 !src/examples/*
