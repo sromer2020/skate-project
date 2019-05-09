@@ -54,7 +54,6 @@ class ImageFilter:
                 break
         cv2.destroyAllWindows()
             
-    
     # combine arbitrary number of binary masks into one
     def _combine_masks(self, masks):
         combined_mask = []
