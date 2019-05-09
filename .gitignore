@@ -5,6 +5,7 @@
 *.mov
 
 !docs/*
+!src/examples/*
 
 src/arc/*
 src/good_stuff/*
