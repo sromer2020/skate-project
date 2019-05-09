@@ -14,10 +14,12 @@ TODO screenshot/gif of it drawing a rectangle over skateboard
 ## Features
 
 This project attempts to streamline the often-laborious process of acquiring a good training dataset for objects where freel-available, labeled training datasets are not available.
-In particular, the project gives tools to take random subsets of frames taken from videos and of interest in sets of unclassified training data, i.e. the process of cropping thousands of unisolated images of the object of interest when a freely-available, labeled training dataset for that object is not available. 
-In other words, this project attempts to remove the tedium of cropping thousands of images of e.g. skateboards when trying to acquire a training dataset for a Haar Cascade skateboard classifier. This is done by:
-1. Extracting a mask of the object of interest out of original images/frames using naive color filters (with filter_finder utility)
-2. Automatically determining rectangular boundaries of object of interest using mask (with autocropper utility).
+In particular, the project gives tools to:
+1. Take random subsets of frames taken from videos.
+2. Automate the extraction of objects of interest from heavily-controlled raw input datasets. This is done by:
+	a. Extracting a mask of the object of interest out of original images/frames using naive color filters (with filter_finder utility)
+	b. Automatically determining rectangular boundaries of object of interest using mask (with autocropper utility).
+In other words, the latter tools attempt to remove the tedium of cropping thousands of images of e.g. skateboards when trying to acquire a training dataset for a Haar Cascade skateboard classifier, when such a dataset is not freely-available.
 
 ## Installation/Setup
 
