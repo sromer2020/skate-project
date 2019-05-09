@@ -47,6 +47,7 @@ Arguments:
 - `videospath` - path to videos to rip and crop frames
 - `framecount` *(optional)* - number of frames to rip for each video
 
+See [Cascade Trainer GUI](http://amin-ahmadi.com/cascade-trainer-gui/) for information on how to actually train a model.
 
 ## Credits
 
