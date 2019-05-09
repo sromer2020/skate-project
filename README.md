@@ -34,9 +34,10 @@ In order to use this project's Patented Intellicrop™ automated feature-croppin
 * movement of the camera towards and away from the object without changing the clockwise position of the camera relative to the object.
 
 Alternatively, a directory containing a set of training images known to contain the object of interest and nothing else can be created.
-Once one or both of the above is done, TODO
+Once one or both of the above is done, run the following command to initiate the frameripping/autocropping:
 
 > cd src
+
 > python FrameRipper.py VIDEOSPATH [--framecount FRAMECOUNT] 
 
 Arguments:
