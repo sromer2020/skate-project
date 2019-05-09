@@ -3,7 +3,11 @@
 *.png
 *.pyc
 *.mov
+
 !docs/*
+
+src/arc/*
+src/good_stuff/*
 
 test.py
 videos/*
