@@ -1,4 +1,4 @@
-﻿# TODO Name of project other than Skateboard Ranch
+﻿# Haar Cascade Training Data Preprocessing Simplification
 
 A machine perception project using Python/OpenCV to attempt to streamline the processes of gathering training data for Haar Cascade classifiers on skateboards, and actually use said classifiers to attempt to classify given images.
 Although this project was initially created to filter/detect skateboards from video files, it was designed with reusability and reapplication of code to new purposes in mind.
