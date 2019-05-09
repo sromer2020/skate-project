@@ -9,7 +9,7 @@ This project was originally created as the final project for Machine Perception 
 
 ## Screenshots
 
-TODO screenshot of it drawing a rectangle over skateboard
+TODO screenshot/gif of it drawing a rectangle over skateboard
 
 ## Features
 
@@ -38,7 +38,7 @@ This project requires the following to be installed:
 Describe and show how to run the tests with code examples.
 TODO
 
-## How to use?
+## Usage
 
 In order to use this project's Patented Intellicrop™ automated feature-cropping feature, a directory containing videos of the object you want to filter out filmed under controlled conditions but changing camera angles, or controlled camera angles and changing conditions must be created. In our case, each of our videos consisted of the object in question filmed under static lighting conditions through either:
 * revolution of the camera around the object at a given height, or
