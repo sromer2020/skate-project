@@ -22,7 +22,7 @@ def process(img):
     for (x, y, w, h) in sk8:
         img = cv.rectangle(img, (x , y), (x + w, y + h), (255, 0, 0), 2)
         
-    sk8 = haar_left_diag.detectMultiScale(gray, 1.3, 3)
+    sk8 = haar_right_diag.detectMultiScale(gray, 1.3, 3)
     for (x, y, w, h) in sk8:
         img = cv.rectangle(img, (x , y), (x + w, y + h), (0, 255, 255), 2)
         
