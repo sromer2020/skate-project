@@ -9,7 +9,7 @@ This project was originally created as the final project for Machine Perception 
 
 ## Screenshots
 
-TODO screenshot/gif of it drawing a rectangle over skateboard
+![](docs/detections.gif)
 
 ## Features
 
