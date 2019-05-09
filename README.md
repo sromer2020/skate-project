@@ -7,10 +7,6 @@ Although this project was initially created to filter/detect skateboards from vi
 
 This project was originally created as the final project for Machine Perception Spring 2019.
 
-## Screenshots
-
-![](docs/detections.gif)
-
 ## Features
 
 This project attempts to streamline the often-laborious process of acquiring a good training dataset for objects where freel-available, labeled training datasets are not available.
@@ -48,6 +44,12 @@ Arguments:
 - `framecount` *(optional)* - number of frames to rip for each video
 
 See [Cascade Trainer GUI](http://amin-ahmadi.com/cascade-trainer-gui/) for information on how to actually train a model.
+
+## Screenshots
+
+Example of detected skateboard object using the trained Haar Cascade models:
+
+![detected rectangles on skateboard image](docs/detections.gif)
 
 ## Credits
 
